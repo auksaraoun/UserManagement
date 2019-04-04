@@ -36,6 +36,7 @@ class LoginController extends Controller
     public function showLoginForm()
 {
     $title = 'Login';
+    $title2 = 'Login';
 
     return view('auth.login', compact('title'))->with($title);
 }
