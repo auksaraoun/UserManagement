@@ -1,0 +1,38 @@
+.pad-10 {padding: 10px 10px 10px 10px;}
+.pad-left-15 {padding-left: 15px;}
+.pad-top-20 {padding-top: 20px !important;}
+
+
+.mar-10 {margin: 10px 10px 10px 10px;}
+
+.mar-bot-10 {margin-bottom:20px; }
+.mar-top-20 {margin-top:20px; }
+.mar-bot-20 {margin-bottom:20px; }
+
+
+.mar-bot-1 {margin-bottom: 1rem;}
+
+.white {color: #ffffff;}
+.dokchan {color: #FF1B1B;font-weight: bold;}
+
+.bg-white {background-color: #ffffff;}
+
+.disabled {
+  color: #212529;
+}
+.wid-res { width: 60%;  }
+
+.text-center {text-align: center;}
+
+
+
+
+@media all and (max-width:480px) {
+   .btn-block-res { width: 100%; display:block; }
+   .btn-table {margin-bottom: 10px;}
+}
+
+@media all and (max-width:768px) {
+   .btn-block-res { width: 100%; display:block; }
+   .wid-res { width: 30%; }
+}   
