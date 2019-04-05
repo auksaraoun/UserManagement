@@ -12,7 +12,7 @@
 					<div class="row">
 						<label for="search" class="col-sm-12 col-md-2 col-lg-1 col-form-label">ค้นหา</label>
 						<div class="input-group col-sm-3 col-md-10 mb-3">
-							<input type="text" class="form-control" name="keyword" value="{{ old('keyword') }}" placeholder="ชื่ออำเภอ" aria-describedby="basic-addon2" >
+							<input type="text" class="form-control" name="keyword" value="{{ old('keyword') }}" placeholder="ชื่ออำเภอ, ชื่อจังหวัด" aria-describedby="basic-addon2" >
 							<div class="input-group-append">
 								<button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
 							</div>
@@ -32,7 +32,8 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th width="60%">ชื่ออำเภอ</th>
+						<th width="40%" >ชื่ออำเภอ</th>
+						<th>จังหวัด</th>
 						<th class="text-center" >ตัวเลือก</th>
 					</tr>
 				</thead>
@@ -45,6 +46,7 @@
 							{{ $i++ }}
 						</td>
 						<td class="pad-top-20" >{{ $data->AMPHUR_NAME }}</td>
+						<td class="pad-top-20" >{{ $data->PROVINCE_NAME }}</td>
 						<td class="text-center" >
 							<button type="button" class="btn btn-primary btn-sm btn-block-res" data-toggle="modal" data-target="#data{{ $data->AMPHUR_ID }}"><i class="fas fa-eye"></i> รายละเอียด</button>
 							<a class="white btn btn-warning btn-sm btn-block-res" href="amphur/{{ $data->AMPHUR_ID }}/edit"><i class="fas fa-edit"></i> แก้ไข</a>
@@ -71,6 +73,12 @@
 										<label for="lastname" class="col-sm-3 col-form-label">ชื่ออำเภอ <span> : </span></label>
 										<div class="col-sm-9">
 											<input type="text" readonly class="form-control-plaintext" id="name" value="{{ $data->AMPHUR_NAME }}">
+										</div>	
+									</div>
+									<div class="form-group row">
+										<label for="lastname" class="col-sm-3 col-form-label">จังหวัด <span> : </span></label>
+										<div class="col-sm-9">
+											<input type="text" readonly class="form-control-plaintext" id="name" value="{{ $data->PROVINCE_NAME }}">
 										</div>	
 									</div>
 								</div>

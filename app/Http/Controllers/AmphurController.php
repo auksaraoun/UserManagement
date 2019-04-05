@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\Province;
 use App\Amphur;
 
@@ -12,10 +13,12 @@ class AmphurController extends Controller
     {
         $response = array();
         $response['menu'] = 'amphur';
-        $data = Amphur::paginate(10);
+        $data = DB::table('amphurs')->join('provinces','amphurs.PROVINCE_ID','=','provinces.PROVINCE_ID')->paginate(10);
         if ( $request->keyword != '' ) {
             $keyword = $request->keyword;
-            $data = Amphur::where('AMPHUR_NAME','LIKE','%'.$keyword.'%')
+            $data = DB::table('amphurs')->join('provinces','amphurs.PROVINCE_ID','=','provinces.PROVINCE_ID')
+                    ->where('AMPHUR_NAME','LIKE','%'.$keyword.'%')
+                    ->orWhere('PROVINCE_NAME','LIKE','%'.$keyword.'%')
                         ->paginate(10);
             $data->appends(['keyword' => $keyword]);
         }
