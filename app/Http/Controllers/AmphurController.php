@@ -19,7 +19,7 @@ class AmphurController extends Controller
             $data = DB::table('amphurs')->join('provinces','amphurs.PROVINCE_ID','=','provinces.PROVINCE_ID')
                     ->where('AMPHUR_NAME','LIKE','%'.$keyword.'%')
                     ->orWhere('PROVINCE_NAME','LIKE','%'.$keyword.'%')
-                        ->paginate(10);
+                    ->paginate(10);
             $data->appends(['keyword' => $keyword]);
         }
         $response['dataTable'] = $data;

@@ -10,11 +10,6 @@ use App\Province;
 use App\Amphur;
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $response = array();
@@ -94,12 +89,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $response = array();
-        $province = Province::all();
-        $amphur = Amphur::all();
-        $response['data'] = User::findOrFail($id);
         $response['menu'] = 'user';
-        $response['province'] = $province;
-        $response['amphur'] = $amphur;
+        $response['data'] = User::findOrFail($id);
+        $response['province'] = Province::all();
+        $response['amphur'] = Amphur::all();
 
         return view('users.edit')->with($response);
     }

@@ -22,7 +22,7 @@
             <div class="container">
 
 
-                <a class="navbar-brand" href="#">ระบบจัดการสมาชิก</a>
+                <a class="navbar-brand" href="/user">ระบบจัดการสมาชิก</a>
 
                 <!-- Toggler/collapsibe Button -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
