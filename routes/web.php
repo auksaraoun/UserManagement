@@ -27,13 +27,24 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/user/{id}/show', 'UserController@show');
 	Route::get('/user/create', 'UserController@create');
 	Route::post('/user/store', 'UserController@store');
+	
+	Route::get('/user/{id}/edit', 'UserController@edit');
+	Route::patch('/user/{id}/update', 'UserController@update');
+	Route::delete('/user/{id}/delete', 'UserController@destroy');
 
 	Route::get('/province', 'ProvinceController@index');
 	Route::get('/province/create', 'ProvinceController@create');
+	Route::get('/province/{id}/edit', 'ProvinceController@edit');
+	Route::patch('/province/{id}/update', 'ProvinceController@update');
 	Route::post('/province/store', 'ProvinceController@store');
+	Route::delete('/province/{id}/delete', 'ProvinceController@destroy');
 
-	Route::get('/province/{id}/amphur', 'AmphurController@index');
-	Route::get('/province/{id}/amphur/create', 'AmphurController@create');
-	Route::post('/province/{id}/amphur/store', 'AmphurController@store');
+	Route::get('amphur', 'AmphurController@index');
+	Route::get('amphur/create', 'AmphurController@create');
+	Route::post('amphur/store', 'AmphurController@store');
+
+	Route::get('/amphur/{id}/edit', 'AmphurController@edit');
+	Route::patch('/amphur/{id}/update', 'AmphurController@update');
+	Route::delete('/amphur/{id}/delete', 'AmphurController@destroy');
 
 });

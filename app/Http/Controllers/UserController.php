@@ -93,18 +93,56 @@ class UserController extends Controller
   
     public function edit($id)
     {
-        //
+        $response = array();
+        $province = Province::all();
+        $amphur = Amphur::all();
+        $response['data'] = User::findOrFail($id);
+        $response['menu'] = 'user';
+        $response['province'] = $province;
+        $response['amphur'] = $amphur;
+
+        return view('users.edit')->with($response);
     }
 
   
     public function update(Request $request, $id)
     {
-        //
+       $user = User::findOrFail($id);
+       $this->validate($request, [
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'tel' => 'required|numeric|',
+            'email' => "required|email|max:255|unique:users,email,".$user->id.",id", 
+            'address' => 'required|string',
+            'province' => 'required|numeric|max:255',
+            'amphur' => 'required',
+            'zipcode' => 'required|numeric|',
+            'password' => 'min:6|nullable',
+        ]);
+
+        $user->firstname = $request->input('firstname');
+        $user->lastname = $request->input('lastname');
+        $user->tel = $request->input('tel');
+        $user->email = $request->input('email');
+        $user->address = $request->input('address');
+        $user->province = $request->input('province');
+        $user->amphur = $request->input('amphur');
+        $user->zipcode = $request->input('zipcode');
+        if( $request->input('password') != '' ) {
+            $user->password = bcrypt($request->input('password'));
+        }
+        if($user->save()) {
+            return redirect('/user');
+        }
+
     }
 
     
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        if( $user->delete() ) {
+            return redirect('/user');
+        }
     }
 }

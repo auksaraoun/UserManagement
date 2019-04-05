@@ -36,7 +36,10 @@
                             <a class="nav-link" href="/user"><i class="fas fa-users"></i> จัดการสมาขิก</a>
                         </li>
                         <li class="nav-item {{ $menu == 'province' ? 'active' : '' }}">
-                            <a class="nav-link" href="/province"><i class="fas fa-tasks"></i> จัดการจังหวัด & อำเภอ</a>
+                            <a class="nav-link" href="/province"><i class="fas fa-tasks"></i> จัดการจังหวัด</a>
+                        </li>
+                         <li class="nav-item {{ $menu == 'amphur' ? 'active' : '' }}">
+                            <a class="nav-link" href="/amphur"><i class="fas fa-thumbtack"></i> จัดกาอำเภอ</a>
                         </li>
                     </ul>
 
@@ -61,6 +64,7 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/custom.js"></script>
     <script src="/js/amphur.js"></script>
     <script src="/assets/jquery/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>

@@ -55,18 +55,28 @@ class ProvinceController extends Controller
 
     public function edit($id)
     {
-        //
+        $response = array();
+        $response['menu'] = 'province';
+        $response['data'] = Province::findOrFail($id);
+        return view('province.edit')->with($response);
     }
 
     
     public function update(Request $request, $id)
     {
-        //
+        $province = Province::findOrFail($id);
+        $province->PROVINCE_NAME = $request->input('name');
+        if($province->save()) {
+            return redirect('/province');
+        }
     }
 
     
     public function destroy($id)
     {
-        //
+        $province = Province::findOrFail($id);
+        if( $province->delete() ) {
+            return redirect('province');
+        }
     }
 }

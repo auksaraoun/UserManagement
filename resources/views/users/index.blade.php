@@ -12,7 +12,7 @@
 					<div class="row">
 						<label for="search" class="col-sm-12 col-md-2 col-lg-1 col-form-label">ค้นหา</label>
 						<div class="input-group col-sm-3 col-md-10 mb-3">
-							<input type="text" class="form-control" name="keyword" value="{{ old('keyword') }}" aria-describedby="basic-addon2" >
+							<input type="text" class="form-control" name="keyword" value="{{ old('keyword') }}" placeholder="ชื่อ, นามสกุล, เบอร์โทร, อีเมลล์" aria-describedby="basic-addon2" >
 							<div class="input-group-append">
 								<button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
 							</div>
@@ -49,7 +49,16 @@
 								<td class="pad-top-20" >{{ $data->tel }}</td>
 								<td class="pad-top-20" >{{ $data->email }}</td>
 								<td class="pad-top-20" >{{ $data->address }}</td>
-								<td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#data{{ $data->id }}"><i class="fas fa-eye"></i> รายละเอียด</button></td>
+								<td>
+									<button type="button" class="btn btn-primary btn-sm btn-block-res" data-toggle="modal" data-target="#data{{ $data->id }}"><i class="fas fa-eye"></i> รายละเอียด</button>
+									<a class="white btn btn-warning btn-sm btn-block-res" href="/user/{{ $data->id }}/edit"><i class="fas fa-edit"></i> แก้ไข</a>
+									<form method="POST" action="/user/{{ $data->id }}/delete" class="btn-block-res inline-block" >
+										 {{csrf_field()}}
+										 <input name="_method" type="hidden" value="DELETE">
+										 <button class="btn btn-danger btn-sm btn-block-res" onclick="return confirmDelete()" type="submit"><i class="fas fa-trash-alt"></i> ลบ</button>
+									</form>
+								</td>
+
 							</tr>
 
 							<!-- Modal -->
@@ -127,25 +136,55 @@
 
 		</div>
 
-		<nav aria-label="Page navigation example">
+		<nav>
 			@if ($dataTable->lastPage() > 1)
-			<ul class="pagination">
-				<li class="page-item {{ ($dataTable->currentPage() == 1) ? ' disabled' : '' }}">
-					<a class="page-link" href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-						<span class="sr-only">Previous</span>
-					</a>
-				</li>
-				@for ($i = 1; $i <= $dataTable->lastPage(); $i++)
-				<li class="page-item {{ $dataTable->currentPage() == $i ? 'active' : '' }}"><a class="page-link" href="{{ $dataTable->url($i) }}">{{$i}}</a></li>
-				@endfor
-				<li class="page-item {{ ($dataTable->currentPage() == $dataTable->lastPage()) ? ' disabled' : '' }}">
-					<a class="page-link" href="{{ $dataTable->url($dataTable->currentPage()+1) }}" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-						<span class="sr-only">Next</span>
-					</a>
-				</li>
-			</ul>
+			<div class="nav-scroller py-1 mb-2">
+				<ul class="pagination pagination-sm flex-sm-wrap">
+					@if ($dataTable->currentPage() != 1)
+					<li class="page-item">
+						<a class="page-link" href="{{ $dataTable->url(1) }}" aria-label="Previous">
+							หน้าแรก
+						</a>
+					</li>
+					@endif
+					<li class="page-item {{ ($dataTable->currentPage() == 1) ? ' disabled' : '' }}">
+						<a class="page-link" href="{{ $dataTable->url($dataTable->currentPage() - 1 ) }}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Previous</span>
+						</a>
+					</li>
+					@for ($i = 1; $i <= $dataTable->lastPage(); $i++)
+					<?php
+					$half_total_links = floor(6 / 2);
+					$from = $dataTable->currentPage() - $half_total_links;
+					$to = $dataTable->currentPage() + $half_total_links;
+					if ($dataTable->currentPage() < $half_total_links) {
+						$to += $half_total_links - $dataTable->currentPage();
+					}
+					if ($dataTable->lastPage() - $dataTable->currentPage() < $half_total_links) {
+						$from -= $half_total_links - ($dataTable->lastPage() - $dataTable->currentPage()) - 1;
+					}
+					?>
+					@if ($from < $i && $i < $to)
+					<li class="page-item {{ $dataTable->currentPage() == $i ? 'active' : '' }}"><a class="page-link" href="{{ $dataTable->url($i) }}">{{$i}} <span class="sr-only">(current)</span></a></li>
+					@endif
+
+					@endfor
+					<li class="page-item {{ ($dataTable->currentPage() == $dataTable->lastPage()) ? ' disabled' : '' }}">
+						<a class="page-link" href="{{ $dataTable->url($dataTable->currentPage()+1) }}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Next</span>
+						</a>
+					</li>
+					@if ($dataTable->currentPage() != $dataTable->lastPage())
+					<li class="page-item">
+						<a class="page-link" href="{{ $dataTable->url($dataTable->lastPage()) }}" aria-label="Last">
+							หน้าสุดท้าย
+						</a>
+					</li>
+					@endif
+				</ul>
+			</div>
 			@endif
 		</nav>
 

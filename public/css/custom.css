@@ -24,7 +24,7 @@
 
 .text-center {text-align: center;}
 
-
+.inline-block {display: inline-block;}
 
 
 @media all and (max-width:480px) {
@@ -33,6 +33,6 @@
 }
 
 @media all and (max-width:768px) {
-   .btn-block-res { width: 100%; display:block; }
+   .btn-block-res { width: 100%; display:block;margin-bottom: 0.5em }
    .wid-res { width: 30%; }
 }   

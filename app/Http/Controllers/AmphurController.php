@@ -8,49 +8,44 @@ use App\Amphur;
 
 class AmphurController extends Controller
 {
-    public function index(Request $request,$id)
+    public function index(Request $request)
     {
         $response = array();
-        $response['menu'] = 'province';
-        $data = Amphur::where('PROVINCE_ID', $id)->paginate(10);
+        $response['menu'] = 'amphur';
+        $data = Amphur::paginate(10);
         if ( $request->keyword != '' ) {
             $keyword = $request->keyword;
-            $data = Amphur::where('PROVINCE_ID',$data)
-                        ->orWhere('AMPHUR_NAME','LIKE','%'.$keyword.'%')
+            $data = Amphur::where('AMPHUR_NAME','LIKE','%'.$keyword.'%')
                         ->paginate(10);
             $data->appends(['keyword' => $keyword]);
         }
-        $province = Province::where('PROVINCE_ID',$id)->first();
         $response['dataTable'] = $data;
-        $response['province'] = $province;
 
         return view('amphur.index')->with($response);
     }
 
     
-    public function create($id)
+    public function create()
     {
         $response = array();
-        $response['menu'] = 'province';
-        $response['province'] = Province::where('PROVINCE_ID',$id)->first();
+        $response['menu'] = 'amphur';
+        $response['province'] = Province::all();
 
         return view('amphur.create')->with($response);
 
     }
 
     
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
         ]);
-
-
         $amphur = new Amphur;
         $amphur->AMPHUR_NAME = $request->input('name');
-        $amphur->PROVINCE_ID = $id;
+        $amphur->PROVINCE_ID = $request->input('province');
         if($amphur->save()) {
-            return redirect('/province/'.$id.'/amphur');
+            return redirect('/amphur');
         }
     }
 
@@ -69,18 +64,30 @@ class AmphurController extends Controller
 
     public function edit($id)
     {
-        //
+        $response = array();
+        $response['menu'] = 'amphur';
+        $response['data'] = Amphur::findOrFail($id);
+        $response['province'] = Province::all();
+        return view('amphur.edit')->with($response);
     }
 
    
     public function update(Request $request, $id)
     {
-        //
+        $amphur = Amphur::findOrFail($id);
+        $amphur->AMPHUR_NAME = $request->input('name');
+        $amphur->PROVINCE_ID = $request->input('province');
+        if($amphur->save()) {
+            return redirect('/amphur');
+        }
     }
 
     
     public function destroy($id)
     {
-        //
+        $amphur = Amphur::findOrFail($id);
+        if( $amphur->delete() ) {
+            return redirect('/amphur');
+        }
     }
 }
